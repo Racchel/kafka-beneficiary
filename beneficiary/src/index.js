@@ -2,11 +2,11 @@ import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
   brokers: ['localhost:9092'],
-  clientId: 'certificate',
+  clientId: 'beneficiary',
 })
 
-const topic = 'issue-certificate'
-const consumer = kafka.consumer({ groupId: 'certificate-group' })
+const topic = 'issue-beneficiary'
+const consumer = kafka.consumer({ groupId: 'beneficiary-group' })
 
 const producer = kafka.producer();
 
@@ -23,9 +23,9 @@ async function run() {
 
       // setTimeout(() => {
       producer.send({
-        topic: 'certification-response',
+        topic: 'beneficiary-response',
         messages: [
-          { value: `Certificado do usuário ${payload.user.name} do curso ${payload.course} gerado!` }
+          { value: `Benefiário ${payload.beneficiary.name} gerado!` }
         ]
       })
       // }, 3000);

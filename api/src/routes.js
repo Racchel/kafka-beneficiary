@@ -1,22 +1,21 @@
-import express from 'express';
+import { Router } from 'express';
 import { CompressionTypes } from 'kafkajs';
 
-const routes = express.Router();
+const routes = Router();
 
-routes.post('/certifications', async (req, res) => {
+routes.post('/beneficiaries', async (req, res) => {
+  const beneficiary = req.body;
+  
   const message = {
-    user: { id: 1, name: 'Diego Fernandes' },
-    course: 'Kafka com Node.js',
-    grade: 10,
+    beneficiary: beneficiary
   };
 
   // Chamar micro serviço
   await req.producer.send({
-    topic: 'issue-certificate',
+    topic: 'issue-beneficiary',
     compression: CompressionTypes.GZIP,
     messages: [
       { value: JSON.stringify(message) },
-      { value: JSON.stringify({ ...message, user: { ...message.user, name: 'Pellizzetti' } }) },
     ],
   })
 
